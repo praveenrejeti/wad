@@ -471,6 +471,32 @@ Wad.prototype.unpause = function(arg){
 	this.play(arg);
 };
 
+/**
+ * Set offset to the current playing sound
+ * @param {*} arg 
+ */
+Wad.prototype.setOffset = function(arg) {
+	arg = arg || {};
+	this.pause();
+	arg.unpause = true;
+	
+	this.play(arg);
+};
+
+Wad.prototype.setBackward = function(arg) {
+	arg = arg || {
+		sec:10
+	};
+	this.pause();
+	arg.unpause = true;
+	if ( this.pauseTime && (this.lastPlayedTime != null) ) {
+		arg.offset = this.pauseTime - this.lastPlayedTime-arg.sec;	}
+	else { 
+		logMessage('You tried to unpause a wad that was not played and paused, so it just played normally instead.', 2);
+	}
+
+};
+
 /** If multiple instances of a sound are playing simultaneously, stop() only can stop the most recent one **/
 Wad.prototype.stop = function(label){
 	if ( !( this.source === 'mic' ) ) {
