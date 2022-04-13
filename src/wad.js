@@ -494,7 +494,22 @@ Wad.prototype.setBackward = function(arg) {
 	else { 
 		logMessage('You tried to unpause a wad that was not played and paused, so it just played normally instead.', 2);
 	}
+	this.play(arg);
+};
 
+
+Wad.prototype.setForward = function(arg) {
+	arg = arg || {
+		sec:10
+	};
+	this.pause();
+	arg.unpause = true;
+	if ( this.pauseTime && (this.lastPlayedTime != null) ) {
+		arg.offset = this.pauseTime - this.lastPlayedTime+arg.sec;	}
+	else { 
+		logMessage('You tried to unpause a wad that was not played and paused, so it just played normally instead.', 2);
+	}
+	this.play(arg);
 };
 
 /** If multiple instances of a sound are playing simultaneously, stop() only can stop the most recent one **/
