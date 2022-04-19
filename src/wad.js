@@ -479,7 +479,12 @@ Wad.prototype.setOffset = function(arg) {
 	arg = arg || {};
 	this.pause();
 	arg.unpause = true;
-	
+	if ( this.pauseTime && (this.lastPlayedTime != null) ) {
+		arg.offset = this.pauseTime - this.lastPlayedTime;
+	}
+	else { 
+		logMessage('You tried to unpause a wad that was not played and paused, so it just played normally instead.', 2);
+	}
 	this.play(arg);
 };
 
